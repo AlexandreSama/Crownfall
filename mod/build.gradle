@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+
+base {
+    archivesName = 'crownfall-mod'
+}
+
+neoForge {
+    version = neo_version
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+            programArgument '--nogui'
+        }
+    }
+
+    mods {
+        crownfall {
+            sourceSet sourceSets.main
+            sourceSet project(':api').sourceSets.main
+        }
+    }
+}
+
+dependencies {
+    implementation project(':api')
+}
+
+// L'API est livrée dans le jar du mod : c'est la seule copie de ces classes sur le serveur,
+// le plugin la compile en compileOnly et la voit à l'exécution via Youer.
+jar {
+    from(project(':api').sourceSets.main.output)
+}
+
+processResources {
+    def props = [mod_version: mod_version, neo_version: neo_version, minecraft_version: minecraft_version]
+    inputs.properties props
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand props
+    }
+}

@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+base {
+    archivesName = 'crownfall-plugin'
+}
+
+repositories {
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+}
+
+dependencies {
+    compileOnly "org.spigotmc:spigot-api:${spigot_version}"
+    // Fournie à l'exécution par le jar du mod.
+    compileOnly project(':api')
+}
+
+processResources {
+    def props = [version: mod_version]
+    inputs.properties props
+    filesMatching('plugin.yml') {
+        expand props
+    }
+}
