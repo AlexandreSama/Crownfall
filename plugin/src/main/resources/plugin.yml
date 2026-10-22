@@ -1,0 +1,14 @@
+name: Crownfall
+version: ${version}
+main: fr.crownfall.plugin.CrownfallPlugin
+api-version: '1.21'
+description: Règles du serveur Royaume VS Royaume Crownfall.
+commands:
+  crownfall:
+    description: Affiche l'état du pont entre le mod et le plugin.
+    usage: /crownfall
+    permission: crownfall.admin
+permissions:
+  crownfall.admin:
+    description: Accès aux commandes d'administration de Crownfall.
+    default: op
